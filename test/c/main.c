@@ -1,6 +1,7 @@
 #include <check.h>
 #include <stdlib.h>
 
+TCase *analyzed_ruby_tests(void);
 TCase *hb_arena_tests(void);
 TCase *hb_array_tests(void);
 TCase *hb_narray_tests(void);
@@ -17,6 +18,7 @@ TCase *extract_tests(void);
 Suite *herb_suite(void) {
   Suite *suite = suite_create("Herb Suite");
 
+  suite_add_tcase(suite, analyzed_ruby_tests());
   suite_add_tcase(suite, hb_arena_tests());
   suite_add_tcase(suite, hb_array_tests());
   suite_add_tcase(suite, hb_narray_tests());

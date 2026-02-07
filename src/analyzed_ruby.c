@@ -5,33 +5,13 @@
 #include <string.h>
 
 analyzed_ruby_T* init_analyzed_ruby(hb_string_T source) {
-  analyzed_ruby_T* analyzed = malloc(sizeof(analyzed_ruby_T));
+  analyzed_ruby_T* analyzed = calloc(1, sizeof(analyzed_ruby_T));
 
   pm_parser_init(&analyzed->parser, (const uint8_t*) source.data, source.length, NULL);
 
   analyzed->root = pm_parse(&analyzed->parser);
   analyzed->valid = (analyzed->parser.error_list.size == 0);
   analyzed->parsed = true;
-  analyzed->if_node_count = 0;
-  analyzed->elsif_node_count = 0;
-  analyzed->else_node_count = 0;
-  analyzed->end_count = 0;
-  analyzed->block_node_count = 0;
-  analyzed->block_closing_count = 0;
-  analyzed->case_node_count = 0;
-  analyzed->case_match_node_count = 0;
-  analyzed->when_node_count = 0;
-  analyzed->in_node_count = 0;
-  analyzed->for_node_count = 0;
-  analyzed->while_node_count = 0;
-  analyzed->until_node_count = 0;
-  analyzed->begin_node_count = 0;
-  analyzed->rescue_node_count = 0;
-  analyzed->ensure_node_count = 0;
-  analyzed->unless_node_count = 0;
-  analyzed->yield_node_count = 0;
-  analyzed->then_keyword_count = 0;
-  analyzed->unclosed_control_flow_count = 0;
 
   return analyzed;
 }
