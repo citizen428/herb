@@ -212,3 +212,7 @@ void hb_buffer_clear(hb_buffer_T* buffer) {
   buffer->length = 0;
   buffer->value[0] = '\0';
 }
+
+void hb_buffer_free_value(hb_buffer_T* buffer) {
+  free(buffer->value);
+}

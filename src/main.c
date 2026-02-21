@@ -53,11 +53,11 @@ int main(const int argc, char* argv[]) {
     return EXIT_FAILURE;
   }
 
-  hb_buffer_T output;
+  __attribute((cleanup(hb_buffer_free_value))) hb_buffer_T output;
 
   if (!hb_buffer_init(&output, 4096)) { return 1; }
 
-  char* source = herb_read_file(argv[2]);
+  __attribute((cleanup(string_free))) char* source = herb_read_file(argv[2]);
 
   struct timespec start, end;
   clock_gettime(CLOCK_MONOTONIC, &start);
@@ -68,9 +68,6 @@ int main(const int argc, char* argv[]) {
 
     puts(output.value);
     print_time_diff(start, end, "lexing");
-
-    free(output.value);
-    free(source);
 
     return EXIT_SUCCESS;
   }
@@ -91,8 +88,6 @@ int main(const int argc, char* argv[]) {
     }
 
     ast_node_free((AST_NODE_T*) root);
-    free(output.value);
-    free(source);
 
     return EXIT_SUCCESS;
   }
@@ -104,9 +99,6 @@ int main(const int argc, char* argv[]) {
     puts(output.value);
     print_time_diff(start, end, "extracting Ruby");
 
-    free(output.value);
-    free(source);
-
     return EXIT_SUCCESS;
   }
 
@@ -116,9 +108,6 @@ int main(const int argc, char* argv[]) {
 
     puts(output.value);
     print_time_diff(start, end, "extracting HTML");
-
-    free(output.value);
-    free(source);
 
     return EXIT_SUCCESS;
   }
@@ -132,8 +121,6 @@ int main(const int argc, char* argv[]) {
     herb_parse_ruby_to_stdout(ruby_source);
 
     free(ruby_source);
-    free(output.value);
-    free(source);
 
     return EXIT_SUCCESS;
   }
